@@ -48,6 +48,28 @@ class NestedController extends Controller
     }
 
     /**
+     * @param Page|null $page
+     *
+     * @return array
+     */
+    protected function makeSubtreeByPage(Page $page = null)
+    {
+        $subtree = [];
+
+        $em = $this->getDoctrine()->getManager();
+        $sameLevelPages = $em->getRepository('AppBundle:Page')->findBy(['parent' => $page]);
+        foreach ($sameLevelPages as $current_page) {
+            $result_item = [
+                'element' => $current_page,
+                'tree' => $this->makeSubtreeByPage($current_page)
+            ];
+            $subtree[] = $result_item;
+        }
+
+        return $subtree;
+    }
+
+    /**
      * @Route("/{path}", name="nested_route", requirements={"path"="[a-zA-Z0-9_/]*"})
      *
      * @param Request $request
@@ -113,7 +135,8 @@ class NestedController extends Controller
      */
     public function rootAction()
     {
-        return $this->render('root/index.html.twig');
+        $tree = $this->makeSubtreeByPage(null);
+        return $this->render('root/index.html.twig', ['tree' => $tree]);
     }
 
     /**
@@ -184,8 +207,12 @@ class NestedController extends Controller
      */
     public function showAction(Request $request)
     {
+        $tree = $this->makeSubtreeByPage($this->pathManager->getLastPage());
+
         return $this->render('page/show.html.twig', [
-            'page' => $this->pathManager->getLastPage()
+            'page' => $this->pathManager->getLastPage(),
+            'tree' => $tree,
+            'page_path' => $this->pathManager->getPath()
         ]);
     }
 }

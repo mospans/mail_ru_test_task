@@ -1,0 +1,22 @@
+<h2>Section tree</h2>
+{% macro show_tree(tree, link_prefix) %}
+    {% import _self as macros %}
+    {% if tree|length > 0 %}
+        <ul>
+            {% for leaf in tree %}
+                <li><a href="{{ link_prefix }}{{ leaf.element.name }}">{{ leaf.element.name }}</a></li>
+                {% if leaf.tree %}
+                    {{ macros.show_tree(leaf.tree, link_prefix ~ leaf.element.name ~ "/") }}
+                {% endif %}
+            {% endfor %}
+        </ul>
+    {% endif %}
+{% endmacro %}
+
+{% import _self as macros %}
+
+{{ macros.show_tree(tree, page_path is defined ? page_path ~ "/" : "/") }}
+
+{% if tree is not defined or tree|length == 0 %}
+    <p>There are no pages</p>
+{% endif %}

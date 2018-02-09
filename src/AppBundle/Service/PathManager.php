@@ -67,18 +67,6 @@ class PathManager
     }
 
     /**
-     * @return string|null
-     */
-    public function getLastElement()
-    {
-        if (count($this->path) === 0) {
-            return null;
-        } else {
-            return $this->path[count($this->path) - 1];
-        }
-    }
-
-    /**
      * @return Page|null
      */
     public function getLastPage()

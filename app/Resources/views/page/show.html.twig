@@ -1,0 +1,22 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>{{ page.header }}</h1>
+
+    <div>
+        {{ page.content | raw }}
+    </div>
+    <ul>
+        <li>
+                <a href="{{ path('nested_route', { 'path': path_manager.getAddPath() }) }}">Add subpage</a>
+        </li>
+        <li>
+            <a href="{{ path('nested_route', { 'path': path_manager.getEditPath() }) }}">Edit</a>
+        </li>
+        {#<li>#}
+            {#{{ form_start(delete_form) }}#}
+                {#<input type="submit" value="Delete">#}
+            {#{{ form_end(delete_form) }}#}
+        {#</li>#}
+    </ul>
+{% endblock %}

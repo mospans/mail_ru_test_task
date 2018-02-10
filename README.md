@@ -1,6 +1,7 @@
 mail_ru_test_task
 =================
-##Запуск проекта
+Запуск проекта
+--------------
 * Склонировать проект:
 ```
 git clone git@github.com:mospans/mail_ru_test_task.git

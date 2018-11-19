@@ -1,10 +1,13 @@
-mail_ru_test_task
+nested_controller
 =================
+
+Шаблон проекта с иерархическим наследованием страниц.
+
 Запуск проекта
 --------------
 * Склонировать проект:
 ```
-git clone git@github.com:mospans/mail_ru_test_task.git
+git clone git@github.com:mospans/nested_controller.git
 ```
 * Установить зависимости:
 ```
